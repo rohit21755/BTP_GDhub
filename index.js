@@ -43,7 +43,37 @@ const shivomContractInstance = new web3.eth.Contract(
     web3.eth.getBalance(fromaddress).then((balance) => {
         console.log("Account balance:", web3.utils.fromWei(balance, 'ether'));
       });
+
+
+    //   Get data by id
+      shivomContractInstance.deployed().then(function(instance) {
+        return instance.getDataById(dataId);
+    }).then(function(result) {
+        // Process the returned data
+        const id = result[0];
+        const dataHash = result[1];
+        const owner = result[2];
+        const isPublic = result[3];
+        console.log(`Genomic data with ID ${id} has hash ${dataHash}, is owned by ${owner}, and is ${isPublic ? 'public' : 'private'}.`);
+    }).catch(function(err) {
+        console.error(err);
+    });
       
+//     const shivom = artifacts.require("shivom");
+
+// module.exports = function(deployer) {
+//   deployer.deploy(shivom).then(async () => {
+//     const shivomInstance = await shivom.deployed();
+//     const fromAddress = '';
+
+//     try {
+//       const receipt = await shivomContractInstance.addData("0x123456789abcdef", true, { from: fromAddress });
+//       console.log("Transaction receipt:", receipt);
+//     } catch (error) {
+//       console.error("Error adding data:", error);
+//     }
+//   });
+// };
 
     
 }
